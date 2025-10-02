@@ -1,10 +1,10 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    id ("dagger.hilt.android.plugin")
+    id("dagger.hilt.android.plugin")
     id("androidx.navigation.safeargs.kotlin")
-    id ("kotlin-parcelize")
-    id ("kotlin-kapt")
+    id("kotlin-parcelize")
+    id("kotlin-kapt")
 }
 
 android {
@@ -45,34 +45,34 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     // Navigation
-    implementation("androidx.navigation:navigation-fragment-ktx:2.9.0")
-    implementation("androidx.navigation:navigation-ui-ktx:2.9.0")
-    implementation("androidx.navigation:navigation-dynamic-features-fragment:2.9.0")
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.androidx.navigation.dynamic.features.fragment)
     // Lifecycle
-    implementation( "androidx.fragment:fragment-ktx:1.8.9")
-    implementation ("androidx.activity:activity-ktx:1.11.0")
+    implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.activity.ktx)
     // ViewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.4")
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
     // GSON
-    implementation ("com.google.code.gson:gson:2.13.2")
+    implementation(libs.gson)
     // OkHttp
-    implementation ("com.squareup.okhttp3:okhttp:5.1.0")
-    implementation ("com.squareup.okhttp3:logging-interceptor:5.1.0")
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
     // Retrofit
-    implementation ("com.squareup.retrofit2:retrofit:3.0.0")
+    implementation(libs.retrofit)
     // Gson converter
-    implementation ("com.squareup.retrofit2:converter-gson:3.0.0")
+    implementation(libs.converter.gson)
     // Hilt
-    implementation ("com.google.dagger:hilt-android:2.57.2")
-    kapt ("com.google.dagger:hilt-android-compiler:2.57.2")
-    kapt ("androidx.hilt:hilt-compiler:1.3.0")
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
+    kapt(libs.androidx.hilt.compiler)
     // Room
-    implementation("androidx.room:room-runtime:2.8.1")
-    kapt("androidx.room:room-compiler:2.8.1")
-    implementation("androidx.room:room-ktx:2.8.1")
-    // Shimmer
-    implementation("com.facebook.shimmer:shimmer:0.5.0")
-    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+    implementation(libs.androidx.room.runtime)
+    kapt(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+    // Swipe Refresh
+    implementation(libs.androidx.swiperefreshlayout)
+    implementation(libs.rxbinding.kotlin)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

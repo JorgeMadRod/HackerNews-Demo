@@ -1,13 +1,18 @@
-package com.jmadrigal.hackernews.features.news.presentation
+package com.jmadrigal.hackernews.features.news.presentation.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.jakewharton.rxbinding.view.RxView
+import com.jmadrigal.hackernews.R
 import com.jmadrigal.hackernews.databinding.ItemNewsBinding
-import com.jmadrigal.hackernews.features.news.data.Hit
+import com.jmadrigal.hackernews.features.news.data.model.Hit
 import com.jmadrigal.hackernews.utils.OnItemSelected
+import com.jmadrigal.hackernews.utils.formatDate
+import rx.android.schedulers.AndroidSchedulers
+import java.util.concurrent.TimeUnit
 
 class NewsAdapter(private var itemSelected: OnItemSelected<Hit>) : ListAdapter<Hit, NewsAdapter.ViewHolder>(DiffUtilsCallback()) {
 
@@ -20,10 +25,14 @@ class NewsAdapter(private var itemSelected: OnItemSelected<Hit>) : ListAdapter<H
         with(holder) {
             with(getItem(position)) {
                 binding.txtTitle.text = this.storyTitle
-                binding.txtUpdatedAt.text = "${this.author} - ${this.createdAt}"
-                binding.item.setOnClickListener {
-                    itemSelected(this)
-                }
+                binding.txtUpdatedAt.text = holder.binding.root.context.getString(R.string.news_subtitle, this.author, this.createdAt?.formatDate())
+
+                RxView.clicks(binding.item)
+                    .throttleFirst(100, TimeUnit.MILLISECONDS)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe {
+                        itemSelected(this)
+                    }
             }
         }
     }

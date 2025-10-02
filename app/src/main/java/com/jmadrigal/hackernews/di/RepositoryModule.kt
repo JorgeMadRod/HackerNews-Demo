@@ -1,10 +1,10 @@
 package com.jmadrigal.hackernews.di
 
-import com.jmadrigal.hackernews.core.database.HitDao
-import com.jmadrigal.hackernews.core.database.HitDeletedDao
+import com.jmadrigal.hackernews.core.database.dao.HitDao
+import com.jmadrigal.hackernews.core.database.dao.HitDeletedDao
 import com.jmadrigal.hackernews.core.network.HackerNewsService
-import com.jmadrigal.hackernews.features.news.data.NewsRepository
-import com.jmadrigal.hackernews.features.news.domain.NewsRepositoryImpl
+import com.jmadrigal.hackernews.features.news.domain.repository.NewsRepository
+import com.jmadrigal.hackernews.features.news.data.repository.NewsRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

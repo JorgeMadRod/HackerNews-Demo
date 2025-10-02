@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">HackerNews</string>
+    <string name="dummy_news_title">Titulo de la historia</string>
+    <string name="dummy_news_author">Jorge - 20min</string>
+    <string name="news_subtitle">%1$s - %2$s</string>
+    <string name="no_data">Detalle no disponible.</string>
+    <string name="error_url">Error al cargar la página. Verifica tu conexión a internet.</string>
 </resources>

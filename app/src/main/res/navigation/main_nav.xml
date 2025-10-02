@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/newsFragment"
-        android:name="com.jmadrigal.hackernews.features.news.presentation.NewsFragment"
+        android:name="com.jmadrigal.hackernews.features.news.presentation.ui.fragment.NewsFragment"
         android:label="NewsFragment"
         tools:layout="@layout/fragment_news">
 
@@ -24,7 +24,7 @@
 
     <fragment
         android:id="@+id/webViewFragment"
-        android:name="com.jmadrigal.hackernews.features.news.presentation.WebViewFragment"
+        android:name="com.jmadrigal.hackernews.features.news.presentation.ui.fragment.WebViewFragment"
         android:label="WebViewFragment"
         tools:layout="@layout/fragment_webview">
 

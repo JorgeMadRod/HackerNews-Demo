@@ -1,4 +1,4 @@
-package com.jmadrigal.hackernews.features.news.presentation
+package com.jmadrigal.hackernews.features.news.presentation.ui.fragment
 
 import android.os.Bundle
 import android.view.View
@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.jmadrigal.hackernews.R
 import com.jmadrigal.hackernews.databinding.FragmentWebviewBinding
+import com.jmadrigal.hackernews.utils.LoadingDialog
 import com.jmadrigal.hackernews.utils.MyWebViewClient
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,12 +36,14 @@ class WebViewFragment : Fragment(R.layout.fragment_webview) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentWebviewBinding.bind(view)
+        LoadingDialog.show(requireActivity())
         setupWebView()
     }
 
     private fun setupWebView() {
         binding.webView.apply {
             webViewClient = MyWebViewClient { pageLoaded ->
+                LoadingDialog.hide()
                 if (!pageLoaded) {
                     showPageLoadedWithError()
                 }
@@ -51,15 +54,12 @@ class WebViewFragment : Fragment(R.layout.fragment_webview) {
     }
 
     private fun showPageLoadedWithError() {
-        Toast.makeText(requireContext(), "Error al cargar la página. Verifica tu conexión a internet.", Toast.LENGTH_LONG).show()
+        Toast.makeText(requireContext(), getString(R.string.error_url), Toast.LENGTH_LONG).show()
         parentFragmentManager.popBackStack()
     }
-
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
-
-
 }

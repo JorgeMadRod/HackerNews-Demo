@@ -1,6 +1,6 @@
 package com.jmadrigal.hackernews.core.network
 
-import com.jmadrigal.hackernews.features.news.data.HitsResponse
+import com.jmadrigal.hackernews.features.news.data.model.HitsResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

@@ -1,6 +1,6 @@
-package com.jmadrigal.hackernews.features.news.domain
+package com.jmadrigal.hackernews.features.news.domain.usecase
 
-import com.jmadrigal.hackernews.features.news.data.NewsRepository
+import com.jmadrigal.hackernews.features.news.domain.repository.NewsRepository
 import jakarta.inject.Inject
 
 class GetLatestNewsUseCase @Inject constructor(

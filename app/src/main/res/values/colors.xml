@@ -7,4 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="ligth_orange">#E65100</color>
+    <color name="orange">#C73D11</color>
+    <color name="text_title">#000000</color>
+    <color name="text_subtitle">#818181</color>
 </resources>

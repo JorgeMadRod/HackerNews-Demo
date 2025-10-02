@@ -2,6 +2,8 @@ package com.jmadrigal.hackernews.core.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.jmadrigal.hackernews.core.database.dao.HitDao
+import com.jmadrigal.hackernews.core.database.dao.HitDeletedDao
 import com.jmadrigal.hackernews.core.database.dto.HitDeletedModel
 import com.jmadrigal.hackernews.core.database.dto.HitModel
 

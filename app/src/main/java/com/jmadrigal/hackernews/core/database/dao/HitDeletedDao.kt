@@ -1,4 +1,4 @@
-package com.jmadrigal.hackernews.core.database
+package com.jmadrigal.hackernews.core.database.dao
 
 import androidx.room.Dao
 import androidx.room.Insert

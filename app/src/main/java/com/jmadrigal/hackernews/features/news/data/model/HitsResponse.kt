@@ -1,4 +1,4 @@
-package com.jmadrigal.hackernews.features.news.data
+package com.jmadrigal.hackernews.features.news.data.model
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

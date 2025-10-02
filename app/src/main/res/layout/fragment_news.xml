@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/imgNoData"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="@dimen/img100dp"
+        android:layout_height="@dimen/img100dp"
         android:adjustViewBounds="true"
         android:src="@drawable/database_off"
         android:visibility="gone"

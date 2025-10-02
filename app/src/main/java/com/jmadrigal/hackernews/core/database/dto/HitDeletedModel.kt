@@ -2,7 +2,7 @@ package com.jmadrigal.hackernews.core.database.dto
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.jmadrigal.hackernews.features.news.data.HitDeleted
+import com.jmadrigal.hackernews.features.news.data.model.HitDeleted
 
 @Entity(tableName = "deleted")
 data class HitDeletedModel(

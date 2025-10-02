@@ -1,44 +1,39 @@
-package com.jmadrigal.hackernews.features.news.domain
+package com.jmadrigal.hackernews.features.news.data.repository
 
-import android.util.Log
-import com.jmadrigal.hackernews.core.database.HitDao
-import com.jmadrigal.hackernews.core.database.HitDeletedDao
+import com.jmadrigal.hackernews.core.database.dao.HitDao
+import com.jmadrigal.hackernews.core.database.dao.HitDeletedDao
 import com.jmadrigal.hackernews.core.database.dto.HitDeletedModel
 import com.jmadrigal.hackernews.core.database.dto.HitModel
 import com.jmadrigal.hackernews.core.network.HackerNewsService
-import com.jmadrigal.hackernews.features.news.data.Hit
-import com.jmadrigal.hackernews.features.news.data.NewsRepository
+import com.jmadrigal.hackernews.features.news.data.model.Hit
+import com.jmadrigal.hackernews.features.news.domain.repository.NewsRepository
 import com.jmadrigal.hackernews.utils.Constants
+import com.jmadrigal.hackernews.utils.GenericDataState
 
 open class NewsRepositoryImpl(
     private val service: HackerNewsService,
     private val dao: HitDao,
     private val deletedDao: HitDeletedDao) : NewsRepository {
 
-    override suspend fun getLatestNews(): List<Hit> {
+    override suspend fun getLatestNews(): GenericDataState<List<Hit>> {
         return try {
             val response = service.getLastStories(Constants.LATEST_NEWS_QUERY).hits
             val latestNews = response.map { HitModel.Companion.fromHit(it) }
             dao.saveLatestNews(latestNews)
             val result = getLocalLatestNews()
-            Log.v("--->", "Entregamos: ${result.size}")
-            result
+            GenericDataState.Success(result)
 
         } catch (ex: Exception) {
-            Log.v("--->", "Ex")
             ex.printStackTrace()
             val result = getLocalLatestNews()
-            Log.v("--->", "Entregamos: ${result.size}")
-            result
+            GenericDataState.Success(result)
         }
     }
 
     override suspend fun getLocalLatestNews(): List<Hit> {
         val localNews = dao.getLatestNews()
         val deletedNews = deletedDao.getDeletedHits()
-            Log.v("--->", "locales: ${localNews.size}")
-            Log.v("--->", "deleted: ${deletedNews.size}")
-        if (localNews.isNullOrEmpty()) return emptyList() else {
+        if (localNews.isEmpty()) return emptyList() else {
             val filteredNews = localNews.filterNot { news ->
                 deletedNews.any { it.objectID == news.objectID }
             }
@@ -49,7 +44,7 @@ open class NewsRepositoryImpl(
     override suspend fun deleteNews(id: String) {
         try {
             deletedDao.saveDeletedHits(HitDeletedModel(id))
-        } catch (ex:Exception){
+        } catch (ex: Exception) {
             ex.printStackTrace()
         }
     }

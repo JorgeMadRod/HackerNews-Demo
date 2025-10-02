@@ -1,4 +1,4 @@
-package com.jmadrigal.hackernews
+package com.jmadrigal.hackernews.application
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

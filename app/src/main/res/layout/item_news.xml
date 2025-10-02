@@ -12,22 +12,24 @@
         android:id="@+id/txtTitle"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="0dp"
+        android:fontFamily="@font/roboto_semi_bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textColor="#000000"
-        tools:text="Titulo de la historia"/>
+        android:textSize="@dimen/text16sp"
+        android:textColor="@color/text_title"
+        tools:text="@string/dummy_news_title"/>
 
     <TextView
         android:id="@+id/txtUpdatedAt"
         app:layout_constraintTop_toBottomOf="@+id/txtTitle"
         android:layout_width="0dp"
-        android:textSize="14sp"
-        android:textColor="#686868"
+        android:fontFamily="@font/roboto_regular"
+        android:textSize="@dimen/text14sp"
+        android:textColor="@color/text_subtitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_height="wrap_content"
-        tools:text="Actualizado hace 20min"/>
+        tools:text="@string/dummy_news_author"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
