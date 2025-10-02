@@ -10,6 +10,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="ligth_orange">#E65100</color>
     <color name="orange">#C73D11</color>
-    <color name="text_title">#000000</color>
+    <color name="text_title">#FFFFFF</color>
     <color name="text_subtitle">#818181</color>
 </resources>

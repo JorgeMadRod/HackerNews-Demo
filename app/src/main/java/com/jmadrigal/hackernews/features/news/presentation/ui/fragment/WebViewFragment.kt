@@ -5,12 +5,15 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.jmadrigal.hackernews.R
 import com.jmadrigal.hackernews.databinding.FragmentWebviewBinding
 import com.jmadrigal.hackernews.utils.LoadingDialog
 import com.jmadrigal.hackernews.utils.MyWebViewClient
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class WebViewFragment : Fragment(R.layout.fragment_webview) {
