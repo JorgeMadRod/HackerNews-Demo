@@ -2,7 +2,6 @@ package com.jmadrigal.hackernews.features.news.presentation.ui.fragment
 
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -21,6 +20,7 @@ import com.jmadrigal.hackernews.utils.LoadingDialog
 import com.jmadrigal.hackernews.utils.SwipeCallback
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -29,30 +29,34 @@ class NewsFragment : Fragment(R.layout.fragment_news) {
     private var _binding: FragmentNewsBinding? = null
     private val binding get() = _binding!!
     private val viewModel: NewsViewModel by viewModels()
-    private val newsAdapter: NewsAdapter by lazy { NewsAdapter() { onItemSelected(it) } }
+    private val newsAdapter: NewsAdapter by lazy { NewsAdapter { onItemSelected(it) } }
     private var newsJob: Job? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentNewsBinding.bind(view)
         setupRecycler()
-        setupObserver()
+        getLatestNews()
+        addItemTouchListener()
         setupRefreshListener()
     }
 
-    private fun setupObserver() {
+    private fun getLatestNews() {
         newsJob = lifecycleScope.launch {
             viewModel.hits.collect {
-                when(it){
+                when (it) {
                     is GenericDataState.Error<*> -> {
                         LoadingDialog.hide()
                     }
+
                     is GenericDataState.IDLE<*> -> {
                         LoadingDialog.hide()
                     }
+
                     is GenericDataState.Loading<*> -> {
                         LoadingDialog.show(requireActivity())
                     }
+
                     is GenericDataState.Success<*> -> {
                         LoadingDialog.hide()
                         it.data?.let {
@@ -65,7 +69,7 @@ class NewsFragment : Fragment(R.layout.fragment_news) {
         viewModel.getLatestNews()
     }
 
-    private fun setupRecycler(){
+    private fun setupRecycler() {
         binding.recycler.apply {
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
@@ -73,36 +77,37 @@ class NewsFragment : Fragment(R.layout.fragment_news) {
         }
     }
 
-    private fun setupRefreshListener(){
+    private fun setupRefreshListener() {
         binding.swRefresh.setOnRefreshListener {
-            setupObserver()
+            getLatestNews()
         }
+    }
+
+    private fun addItemTouchListener(){
+        val itemTouchHelper = ItemTouchHelper(SwipeCallback(requireContext()) { position ->
+            val currentList = newsAdapter.currentList.toMutableList()
+            viewModel.deleteHit(currentList[position].objectID ?: "")
+            currentList.removeAt(position)
+            getLatestNews()
+        })
+        itemTouchHelper.attachToRecyclerView(binding.recycler)
     }
 
     private fun fillLatestNews(hits: List<Hit>) {
         newsJob?.cancel()
-        val itemTouchHelper = ItemTouchHelper(SwipeCallback(requireContext()) { position ->
+        binding.swRefresh.isRefreshing = false
+        newsAdapter.submitList(hits)
+        checkIfListHaveItems()
+    }
 
-            val currentList = newsAdapter.currentList.toMutableList()
-            viewModel.deleteHit(currentList[position].objectID?:"")
-            currentList.removeAt(position)
-            newsAdapter.submitList(currentList)
-            if (currentList.isEmpty()){
+    private fun checkIfListHaveItems(){
+        lifecycleScope.launch {
+            delay(100)
+            if (newsAdapter.currentList.isEmpty()) {
                 binding.imgNoData.visibility = View.VISIBLE
             } else {
                 binding.imgNoData.visibility = View.GONE
             }
-        })
-
-        itemTouchHelper.attachToRecyclerView(binding.recycler)
-
-        binding.swRefresh.isRefreshing = false
-
-        if (hits.isEmpty()) {
-            binding.imgNoData.visibility = View.VISIBLE
-        } else {
-            binding.imgNoData.visibility = View.GONE
-            newsAdapter.submitList(hits)
         }
     }
 
@@ -122,6 +127,11 @@ class NewsFragment : Fragment(R.layout.fragment_news) {
     override fun onPause() {
         super.onPause()
         newsJob?.cancel()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        LoadingDialog.hide()
     }
 
     override fun onDestroyView() {

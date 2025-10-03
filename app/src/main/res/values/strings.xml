@@ -5,4 +5,5 @@
     <string name="news_subtitle">%1$s - %2$s</string>
     <string name="no_data">Detalle no disponible.</string>
     <string name="error_url">Error al cargar la página. Verifica tu conexión a internet.</string>
+    <string name="text_swp_to_refresh">Por el momento no contenido.\nDesliza hacia abajo para actualizar</string>
 </resources>
