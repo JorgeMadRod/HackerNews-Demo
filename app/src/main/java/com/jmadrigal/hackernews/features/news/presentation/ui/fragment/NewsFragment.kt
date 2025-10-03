@@ -2,6 +2,7 @@ package com.jmadrigal.hackernews.features.news.presentation.ui.fragment
 
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -34,7 +35,7 @@ class NewsFragment : Fragment(R.layout.fragment_news) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentNewsBinding.bind(view)
-        fillLatestNews()
+        setupRecycler()
         setupObserver()
         setupRefreshListener()
     }
@@ -64,7 +65,7 @@ class NewsFragment : Fragment(R.layout.fragment_news) {
         viewModel.getLatestNews()
     }
 
-    private fun fillLatestNews(){
+    private fun setupRecycler(){
         binding.recycler.apply {
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
